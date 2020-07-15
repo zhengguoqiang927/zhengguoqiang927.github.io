@@ -1,0 +1,830 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Georgia:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Gemini","version":"7.7.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"default"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"disqus","storage":true,"lazyload":false,"nav":null,"activeClass":"disqus"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="Hexo + Github 搭建个人博客填坑记。 准备环境 Node.js （Hexo官网建议版本最好在10.0以上）  没装过Node的话直接去 Node 官网下载安装就可以，由于我本地之前装过，但是版本较低需要升级下，这里介绍升级方法，步骤如下： 123451. npm -v 查看npm版本2. sudo npm i -g npm 执行npm -v之后系统提示的升级npm命令，-g表示全局安装">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hexo + Github搭建个人博客">
+<meta property="og:url" content="http://yoursite.com/2020/03/27/hexo-hexo-github/index.html">
+<meta property="og:site_name" content="Z&#39;s Blog">
+<meta property="og:description" content="Hexo + Github 搭建个人博客填坑记。 准备环境 Node.js （Hexo官网建议版本最好在10.0以上）  没装过Node的话直接去 Node 官网下载安装就可以，由于我本地之前装过，但是版本较低需要升级下，这里介绍升级方法，步骤如下： 123451. npm -v 查看npm版本2. sudo npm i -g npm 执行npm -v之后系统提示的升级npm命令，-g表示全局安装">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://raw.githubusercontent.com/zhengguoqiang927/Figure-bed/master/img/hexo_replaceofnull_error.png">
+<meta property="article:published_time" content="2020-03-27T09:05:38.000Z">
+<meta property="article:modified_time" content="2020-04-11T11:00:57.183Z">
+<meta property="article:author" content="ZGQ">
+<meta property="article:tag" content="Hexo">
+<meta property="article:tag" content="Github">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/zhengguoqiang927/Figure-bed/master/img/hexo_replaceofnull_error.png">
+
+<link rel="canonical" href="http://yoursite.com/2020/03/27/hexo-hexo-github/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Hexo + Github搭建个人博客 | Z's Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Z's Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">Talk is cheap, show me the code</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/03/27/hexo-hexo-github/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+      <meta itemprop="name" content="ZGQ">
+      <meta itemprop="description" content="Java">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Z's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Hexo + Github搭建个人博客
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-03-27 17:05:38" itemprop="dateCreated datePublished" datetime="2020-03-27T17:05:38+08:00">2020-03-27</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-04-11 19:00:57" itemprop="dateModified" datetime="2020-04-11T19:00:57+08:00">2020-04-11</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Hexo/" itemprop="url" rel="index"><span itemprop="name">Hexo</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus：</span>
+    
+    <a title="disqus" href="/2020/03/27/hexo-hexo-github/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2020/03/27/hexo-hexo-github/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>4.1k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>4 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>Hexo + Github 搭建个人博客填坑记。</p>
+<h2 id="准备环境"><a href="#准备环境" class="headerlink" title="准备环境"></a>准备环境</h2><ol>
+<li><strong>Node.js</strong> （Hexo官网建议版本最好在10.0以上）</li>
+</ol>
+<p>没装过Node的话直接去 <a href="https://nodejs.org/en/" target="_blank" rel="noopener">Node</a> 官网下载安装就可以，由于我本地之前装过，但是版本较低需要升级下，这里介绍升级方法，步骤如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">1. npm -v 查看npm版本</span><br><span class="line">2. sudo npm i -g npm 执行npm -v之后系统提示的升级npm命令，-g表示全局安装</span><br><span class="line">3. sudo npm install -g n 安装n模块，n模块是专门用来管理nodejs版本的。</span><br><span class="line">4. sudo n stable 升级nodejs到目前最新的稳定版本</span><br><span class="line">5. node -v 查看node版本</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li><strong>Github账号</strong></li>
+</ol>
+<p><a href="https://github.com/" target="_blank" rel="noopener">官网</a> 注册即可</p>
+<ol start="3">
+<li><strong>本地Git环境</strong></li>
+</ol>
+<ul>
+<li>Windows：下载并安装 <a href="https://git-scm.com/download/win" target="_blank" rel="noopener">git</a></li>
+<li>Mac：Homebrew安装简洁方便</li>
+<li>Linux（Ubuntu、Debian）：sudo apt-get install git-core</li>
+<li>Linux（Fedora、Redhat、CentOS）：sudo yum install git-core</li>
+</ul>
+<a id="more"></a>
+
+<ol start="4">
+<li><strong>Hexo</strong></li>
+</ol>
+<p><a href="https://hexo.io/zh-cn/docs/" target="_blank" rel="noopener">官网地址</a> 官网已经很全面，建议遇到问题多多查询官方文档。</p>
+<p>Node.js安装好之后，直接用npm进行安装，命令如下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install -g hexo-cli</span><br></pre></td></tr></table></figure>
+
+<p>顺便记录两个问题：</p>
+<ul>
+<li>Problem 1</li>
+</ul>
+<p>由于我之前已经安装过hexo，并且已经初始化过目录，中间隔了很久没有写博客（期间保存在MEGA上）当再次进入到该目录下执行hexo命令时报错（<u>注: 只有在之前初始化过的目录执行hexo相关命令才会报错，除了此目录之外的其他目录执行<code>hexo version</code>、<code>hexo init folder</code>等都没问题，也就是hexo本身没问题</u>），错误信息如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ERROR Local hexo not found in xxx</span><br><span class="line">ERROR Try running:&#39;npm install hexo --save&#39;</span><br></pre></td></tr></table></figure>
+
+<p>解决方案<code>rm -rf node_modules/ &amp;&amp; npm install</code> 源自<a href="https://github.com/hexojs/hexo/issues/2076#issuecomment-273472704" target="_blank" rel="noopener">issue</a></p>
+<ul>
+<li>Problem 2</li>
+</ul>
+<p>问题一解决之后，进行生成静态网页并启动本地服务器，再次报错如下：</p>
+<p><img src="https://raw.githubusercontent.com/zhengguoqiang927/Figure-bed/master/img/hexo_replaceofnull_error.png" alt="hexo_replaceofnull_error"></p>
+<p>产生这个问题的大部分原因是由于你的配置文件包括根目录配置、主题配置文件和你的markdown文件不匹配造成的。我的原因是因为我在配置文件里多写了两个插件：统计字数（symbols_count_time）和本地搜索（search）而没有进行安装造成的</p>
+<h2 id="基础指令"><a href="#基础指令" class="headerlink" title="基础指令"></a>基础指令</h2><h3 id="init"><a href="#init" class="headerlink" title="init"></a>init</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo init [folder]  	//初始化工作目录</span><br></pre></td></tr></table></figure>
+
+<h3 id="new"><a href="#new" class="headerlink" title="new"></a>new</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo new  &lt;layout&gt; [--path] "标题名"  //新建</span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th>布局</th>
+<th>路径</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>post</td>
+<td>source/_posts</td>
+</tr>
+<tr>
+<td>page</td>
+<td>source</td>
+</tr>
+<tr>
+<td>draft</td>
+<td>source/_drafts</td>
+</tr>
+</tbody></table>
+<p>post布局用来创建文章，–path选项还可以是其他的选项，如–replace，详细内容参见官网</p>
+<ul>
+<li>创建默认路径的文章</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo new "article"</span><br></pre></td></tr></table></figure>
+
+<p>文件路径：<code>source/_posts/article.md</code>,同时<code>article.md</code>的 Front Matter 中的 title 为 <code>article</code></p>
+<ul>
+<li>创建指定路径的文章</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo new post --path book/mysql/Chapter-One "第一章"</span><br></pre></td></tr></table></figure>
+
+<p>文件路径：<code>source/_posts/book/mysql/Chapter-One.md</code>，同时<code>Chapter-One.md</code>的Front Matter中的title 为<code>第一章</code>。该方式用来分层管理本地文章很实用。</p>
+<p>page布局用来创建分类、归档、关于等类别</p>
+<ul>
+<li>创建标签</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo new page tags</span><br></pre></td></tr></table></figure>
+
+<p>执行此命令后，会创建文件<code>source/tags/index.md</code> ，修改index.md文件添加type属性：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">title: 标签</span><br><span class="line">date: 2019-10-17 14:21:33</span><br><span class="line">type: "tags"</span><br><span class="line">comments: false</span><br></pre></td></tr></table></figure>
+
+<p><em>注意： type冒号后面一定要留出一个空格，这样菜单页标签才生效，分类、归档等都是一样的方式</em></p>
+<ul>
+<li>创建分类</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo new page categories</span><br></pre></td></tr></table></figure>
+
+<p>执行此命令后，会创建文件<code>source/categories/index.md</code> ，修改index.md文件添加type属性：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">title: 文章分类</span><br><span class="line">date: 2019-10-17 14:22:55</span><br><span class="line">type: "categories"</span><br><span class="line">comments: false</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>创建归档</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo new page archives</span><br></pre></td></tr></table></figure>
+
+<p>执行此命令后，会创建文件<code>source/archives/index.md</code> ，修改index.md文件添加type属性：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">title: 归档</span><br><span class="line">date: 2019-10-17 14:23:15</span><br><span class="line">type: "archives"</span><br><span class="line">comments: false</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>创建关于</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo new page about</span><br></pre></td></tr></table></figure>
+
+<p>执行此命令后，会创建文件<code>source/about/index.md</code> ，修改index.md文件添加type属性：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">title: about</span><br><span class="line">date: 2019-10-17 14:24:24</span><br><span class="line">type: "about"</span><br><span class="line">comments: false</span><br></pre></td></tr></table></figure>
+
+<h3 id="publish"><a href="#publish" class="headerlink" title="publish"></a>publish</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo publish [layout] &lt;filename&gt;		//发表草稿</span><br></pre></td></tr></table></figure>
+
+<h3 id="generate"><a href="#generate" class="headerlink" title="generate"></a>generate</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo generate		//生成静态文件</span><br></pre></td></tr></table></figure>
+
+<p>简写为：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo g</span><br></pre></td></tr></table></figure>
+
+<p>生成的静态文件都在<code>public</code>目录下</p>
+<h3 id="server"><a href="#server" class="headerlink" title="server"></a>server</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo server		//启动本地服务器</span><br></pre></td></tr></table></figure>
+
+<p>简写为：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo s</span><br></pre></td></tr></table></figure>
+
+<p>默认访问网址：<code>http://localhost:4000/</code></p>
+<h3 id="deploy"><a href="#deploy" class="headerlink" title="deploy"></a>deploy</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo deploy		//部署到github</span><br></pre></td></tr></table></figure>
+
+<p>简写为：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo d</span><br></pre></td></tr></table></figure>
+
+<h3 id="clean"><a href="#clean" class="headerlink" title="clean"></a>clean</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo clean		//清除缓存文件(db.json)和已生成的静态文件(public)</span><br></pre></td></tr></table></figure>
+
+<h3 id="list"><a href="#list" class="headerlink" title="list"></a>list</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo list &lt;type&gt;		//列出网站资料</span><br></pre></td></tr></table></figure>
+
+<p>type可取值：<code>page</code>、<code>post</code>、<code>route</code>、<code>tag</code>、<code>category</code></p>
+<p>比如想查看本地文章列表可执行：<code>hexo list post</code></p>
+<h3 id="version"><a href="#version" class="headerlink" title="version"></a>version</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo version		//查看hexo版本</span><br></pre></td></tr></table></figure>
+
+<h3 id="debug"><a href="#debug" class="headerlink" title="debug"></a>debug</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo --debug		//调试模式</span><br></pre></td></tr></table></figure>
+
+<h3 id="组合命令"><a href="#组合命令" class="headerlink" title="组合命令"></a>组合命令</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo clean &amp;&amp; hexo g &amp;&amp; hexo s 		//快速生成静态文件并启动本地服务器</span><br></pre></td></tr></table></figure>
+
+<h2 id="Front-matter"><a href="#Front-matter" class="headerlink" title="Front-matter"></a>Front-matter</h2><table>
+<thead>
+<tr>
+<th align="left"></th>
+<th align="left"></th>
+<th align="left"></th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">参数</td>
+<td align="left">描述</td>
+<td align="left">默认值</td>
+</tr>
+<tr>
+<td align="left"><code>layout</code></td>
+<td align="left">布局</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left"><code>title</code></td>
+<td align="left">标题</td>
+<td align="left">文章的文件名</td>
+</tr>
+<tr>
+<td align="left"><code>date</code></td>
+<td align="left">建立日期</td>
+<td align="left">文件建立日期</td>
+</tr>
+<tr>
+<td align="left"><code>updated</code></td>
+<td align="left">更新日期</td>
+<td align="left">文件更新日期</td>
+</tr>
+<tr>
+<td align="left"><code>comments</code></td>
+<td align="left">开启文章的评论功能</td>
+<td align="left">true</td>
+</tr>
+<tr>
+<td align="left"><code>tags</code></td>
+<td align="left">标签（不适用于分页）</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left"><code>categories</code></td>
+<td align="left">分类（不适用于分页）</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left"><code>permalink</code></td>
+<td align="left">覆盖文章网址</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left"><code>keywords</code></td>
+<td align="left">仅用于 meta 标签和 Open Graph 的关键词（不推荐使用）</td>
+<td align="left"></td>
+</tr>
+</tbody></table>
+<p>分类具有顺序性和层次性，标签没有，如：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">categories:</span><br><span class="line">- [Diary,PlayStation]</span><br><span class="line">- [Diary,Games]</span><br><span class="line">- [Life]</span><br><span class="line">tags:</span><br><span class="line">- PS3</span><br><span class="line">- Games</span><br></pre></td></tr></table></figure>
+
+<p>这篇文章包含三个分类和两个标签：</p>
+<p><code>PlatStation</code>和<code>Games</code>是子分类，父分类为<code>Diary</code>，<code>Life</code>是没有子分类的分类 </p>
+<p><code>PS3</code>和<code>Games</code>是没有顺序和层次性的标签</p>
+<h2 id="主题"><a href="#主题" class="headerlink" title="主题"></a>主题</h2><p>Hexo支持非常多的主题，可在<a href="https://hexo.io/themes/" target="_blank" rel="noopener">https://hexo.io/themes/</a> 随意查找</p>
+<p>Next主题官网地址：<a href="https://theme-next.org/docs/" target="_blank" rel="noopener">https://theme-next.org/docs/</a></p>
+<p>两个配置文件：</p>
+<ol>
+<li><p><code>hexo init &lt;folder&gt;</code>这个folder是根目录下的_config.yml 就是<strong>根目录配置文件</strong></p>
+</li>
+<li><p><code>根目录/themes/next/_config.yml</code>是<strong>主题配置文件</strong></p>
+</li>
+</ol>
+<h3 id="Next主题"><a href="#Next主题" class="headerlink" title="Next主题"></a>Next主题</h3><p>在根目录下执行如下命令：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git clone https://github.com/theme-next/hexo-theme-next themes/next</span><br></pre></td></tr></table></figure>
+
+<p>然后在根配置文件中搜索<code>theme</code>，将其值修改为 <code>next</code>即可。</p>
+<p>主题配置可参考所使用的具体主题的文档。</p>
+<h3 id="添加评论"><a href="#添加评论" class="headerlink" title="添加评论"></a>添加评论</h3><p>Next支持很多评论系统，主题配置文件注释中有写 Available values: changyan | disqus | disqusjs | facebook_comments_plugin | gitalk | livere | valine | vkontakte，我集成的disqus（需要翻墙），国内可以采用valine，也很不错。</p>
+<p>具体配置可参考 <a href="http://www.cylong.com/blog/2017/03/26/hexo-next-disqus/" target="_blank" rel="noopener">Hexo集成Disqus评论</a></p>
+<h3 id="阅读全文"><a href="#阅读全文" class="headerlink" title="阅读全文"></a>阅读全文</h3><p>主题配置文件中搜索<code>scroll_to_more</code>，将其设置为<code>true</code>，如果没有搜到，直接将下面的配置拷贝粘贴到主题配置文件中。</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Automatically scroll page to section which is under &lt;!-- more --&gt; mark.</span></span><br><span class="line"><span class="attr">scroll_to_more:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure>
+
+<p>然后在文章插入<code>&lt;!-- more --&gt;</code>，之后的文章内容将被隐藏，并在首页列表显示<code>阅读全文</code></p>
+<h2 id="插件"><a href="#插件" class="headerlink" title="插件"></a>插件</h2><p>Hexo支持非常多的插件，插件地址：<a href="https://hexo.io/plugins/" target="_blank" rel="noopener">https://hexo.io/plugins/</a></p>
+<h3 id="symbols-count-time"><a href="#symbols-count-time" class="headerlink" title="symbols-count-time"></a>symbols-count-time</h3><p>用于统计文章字数及推荐阅读时长</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install hexo-symbols-count-time --save</span><br></pre></td></tr></table></figure>
+
+<p>然后在根目录配置文件进行配置：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">symbols_count_time:</span></span><br><span class="line">  <span class="attr">symbols:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">time:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">total_symbols:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">total_time:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure>
+
+<p>重启服务生效。详情参考<a href="https://github.com/theme-next/hexo-symbols-count-time" target="_blank" rel="noopener">symbols_count_time</a></p>
+<h3 id="generator-searchdb"><a href="#generator-searchdb" class="headerlink" title="generator-searchdb"></a>generator-searchdb</h3><p>该插件可以生成一个包含你所有文章的索引文件，可以快速检索你发布过的文章。其实就是个本地搜索引擎。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install hexo-generator-searchdb --save</span><br></pre></td></tr></table></figure>
+
+<p>然后在根目录配置文件进行配置：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">search:</span></span><br><span class="line">  <span class="attr">path:</span> <span class="string">search.xml</span></span><br><span class="line">  <span class="attr">field:</span> <span class="string">post</span></span><br><span class="line">  <span class="attr">format:</span> <span class="string">html</span></span><br><span class="line">  <span class="attr">limit:</span> <span class="number">10000</span></span><br></pre></td></tr></table></figure>
+
+<p>重启服务生效。详情参考<a href="https://github.com/theme-next/hexo-generator-search" target="_blank" rel="noopener">hexo-generator-search</a></p>
+<h2 id="Hexo原理"><a href="#Hexo原理" class="headerlink" title="Hexo原理"></a>Hexo原理</h2><p>Hexo 基于模板引擎实现Markdown文件到html网页的转换，根目录下source文件夹下的md文件就是数据，themes目录下的swig文件就是页面布局，然后swig模板引擎进行页面的生成。</p>
+<p>原理参考 <a href="http://dinghongkai.com/2017/12/18/Blog-development-3-Know-Hexo/" target="_blank" rel="noopener">深入理解Hexo</a></p>
+<p>swig语法参考 <a href="https://www.jianshu.com/p/c5d333e6353c" target="_blank" rel="noopener">swig语法介绍</a></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/Hexo/" rel="tag"><i class="fa fa-tag"></i> Hexo</a>
+              <a href="/tags/Github/" rel="tag"><i class="fa fa-tag"></i> Github</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/03/27/spring-Spring-Annotation/" rel="prev" title="Spring注解驱动">
+      <i class="fa fa-chevron-left"></i> Spring注解驱动
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/04/07/java-core-Java-Fundamentals/" rel="next" title="Java核心技术 - 基础知识卷">
+      Java核心技术 - 基础知识卷 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#准备环境"><span class="nav-number">1.</span> <span class="nav-text">准备环境</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#基础指令"><span class="nav-number">2.</span> <span class="nav-text">基础指令</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#init"><span class="nav-number">2.1.</span> <span class="nav-text">init</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#new"><span class="nav-number">2.2.</span> <span class="nav-text">new</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#publish"><span class="nav-number">2.3.</span> <span class="nav-text">publish</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#generate"><span class="nav-number">2.4.</span> <span class="nav-text">generate</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#server"><span class="nav-number">2.5.</span> <span class="nav-text">server</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#deploy"><span class="nav-number">2.6.</span> <span class="nav-text">deploy</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#clean"><span class="nav-number">2.7.</span> <span class="nav-text">clean</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#list"><span class="nav-number">2.8.</span> <span class="nav-text">list</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#version"><span class="nav-number">2.9.</span> <span class="nav-text">version</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#debug"><span class="nav-number">2.10.</span> <span class="nav-text">debug</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#组合命令"><span class="nav-number">2.11.</span> <span class="nav-text">组合命令</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Front-matter"><span class="nav-number">3.</span> <span class="nav-text">Front-matter</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#主题"><span class="nav-number">4.</span> <span class="nav-text">主题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Next主题"><span class="nav-number">4.1.</span> <span class="nav-text">Next主题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#添加评论"><span class="nav-number">4.2.</span> <span class="nav-text">添加评论</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#阅读全文"><span class="nav-number">4.3.</span> <span class="nav-text">阅读全文</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#插件"><span class="nav-number">5.</span> <span class="nav-text">插件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#symbols-count-time"><span class="nav-number">5.1.</span> <span class="nav-text">symbols-count-time</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#generator-searchdb"><span class="nav-number">5.2.</span> <span class="nav-text">generator-searchdb</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Hexo原理"><span class="nav-number">6.</span> <span class="nav-text">Hexo原理</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="ZGQ"
+      src="/images/avatar.jpeg">
+  <p class="site-author-name" itemprop="name">ZGQ</p>
+  <div class="site-description" itemprop="description">Java</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">28</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">23</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/zhengguoqiang927" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;zhengguoqiang927" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:zhengguoqiang927@gmail.com" title="E-Mail → mailto:zhengguoqiang927@gmail.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title">
+      <i class="fa fa-fw fa-link"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://coolshell.cn/" title="https:&#x2F;&#x2F;coolshell.cn&#x2F;" rel="noopener" target="_blank">左耳朵耗子</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://www.liaoxuefeng.com/" title="https:&#x2F;&#x2F;www.liaoxuefeng.com&#x2F;" rel="noopener" target="_blank">廖雪峰</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ZGQ</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    <span title="站点总字数">201k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">3:03</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script>
+  function loadCount() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://johnson-5.disqus.com/count.js';
+    s.id = 'dsq-count-scr';
+    (d.head || d.body).appendChild(s);
+  }
+  // defer loading until the whole page loading is completed
+  window.addEventListener('load', loadCount, false);
+</script>
+<script>
+  var disqus_config = function() {
+    this.page.url = "http://yoursite.com/2020/03/27/hexo-hexo-github/";
+    this.page.identifier = "2020/03/27/hexo-hexo-github/";
+    this.page.title = "Hexo + Github搭建个人博客";
+    };
+  NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
+    if (window.DISQUS) {
+      DISQUS.reset({
+        reload: true,
+        config: disqus_config
+      });
+    } else {
+      var d = document, s = d.createElement('script');
+      s.src = 'https://johnson-5.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', '' + +new Date());
+      (d.head || d.body).appendChild(s);
+    }
+  });
+</script>
+
+</body>
+</html>
